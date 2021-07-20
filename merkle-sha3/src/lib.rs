@@ -1,5 +1,5 @@
 #![deny(
-    missing_docs, unused_qualifications,
+    unused_qualifications,
     missing_copy_implementations,
     trivial_casts, trivial_numeric_casts,
     unsafe_code, unstable_features,
@@ -13,7 +13,9 @@
 #[macro_use]
 extern crate sgx_tstd as std;
 
-//! *merkle* implements a Merkle Tree in Rust.
+use std::prelude::v1::*;
+
+// *merkle* implements a Merkle Tree in Rust.
 
 extern crate crypto;
 

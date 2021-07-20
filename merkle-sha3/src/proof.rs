@@ -1,3 +1,4 @@
+use std::prelude::v1::*;
 use crypto::sha3::Sha3;
 
 use tree::Tree;

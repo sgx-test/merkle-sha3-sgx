@@ -21,6 +21,7 @@ use crypto::digest::Digest;
 ///     }
 /// }
 /// ```
+use std::prelude::v1::*;
 pub trait Hashable {
 
     /// Update the given `context` with `self`.

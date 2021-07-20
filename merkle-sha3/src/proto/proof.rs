@@ -17,26 +17,35 @@
 #![allow(unused_imports)]
 #![allow(unused_results)]
 
+#![cfg_attr(all(feature = "mesalock_sgx", not(target_env = "sgx")), no_std)]
+#![cfg_attr(all(target_env = "sgx", target_vendor = "mesalock"), feature(rustc_private))]
+
+#[cfg(all(feature = "mesalock_sgx", not(target_env = "sgx")))]
+#[macro_use]
+extern crate sgx_tstd as std;
+
+use std::prelude::v1::*;
+
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
 #[derive(Clone,Default)]
 pub struct ProofProto {
     // message fields
-    root_hash: ::protobuf::SingularField<::std::vec::Vec<u8>>,
+    root_hash: ::protobuf::SingularField<std::vec::Vec<u8>>,
     lemma: ::protobuf::SingularPtrField<LemmaProto>,
-    value: ::protobuf::SingularField<::std::vec::Vec<u8>>,
+    value: ::protobuf::SingularField<std::vec::Vec<u8>>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::std::cell::Cell<u32>,
+    cached_size: std::cell::Cell<u32>,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
-unsafe impl ::std::marker::Sync for ProofProto {}
+unsafe impl std::marker::Sync for ProofProto {}
 
 impl ProofProto {
     pub fn new() -> ProofProto {
-        ::std::default::Default::default()
+        std::default::Default::default()
     }
 
     pub fn default_instance() -> &'static ProofProto {
@@ -51,7 +60,7 @@ impl ProofProto {
                     lemma: ::protobuf::SingularPtrField::none(),
                     value: ::protobuf::SingularField::none(),
                     unknown_fields: ::protobuf::UnknownFields::new(),
-                    cached_size: ::std::cell::Cell::new(0),
+                    cached_size: std::cell::Cell::new(0),
                 }
             })
         }
@@ -68,13 +77,13 @@ impl ProofProto {
     }
 
     // Param is passed by value, moved
-    pub fn set_root_hash(&mut self, v: ::std::vec::Vec<u8>) {
+    pub fn set_root_hash(&mut self, v: std::vec::Vec<u8>) {
         self.root_hash = ::protobuf::SingularField::some(v);
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_root_hash(&mut self) -> &mut ::std::vec::Vec<u8> {
+    pub fn mut_root_hash(&mut self) -> &mut std::vec::Vec<u8> {
         if self.root_hash.is_none() {
             self.root_hash.set_default();
         };
@@ -82,8 +91,8 @@ impl ProofProto {
     }
 
     // Take field
-    pub fn take_root_hash(&mut self) -> ::std::vec::Vec<u8> {
-        self.root_hash.take().unwrap_or_else(|| ::std::vec::Vec::new())
+    pub fn take_root_hash(&mut self) -> std::vec::Vec<u8> {
+        self.root_hash.take().unwrap_or_else(|| std::vec::Vec::new())
     }
 
     pub fn get_root_hash(&self) -> &[u8] {
@@ -137,13 +146,13 @@ impl ProofProto {
     }
 
     // Param is passed by value, moved
-    pub fn set_value(&mut self, v: ::std::vec::Vec<u8>) {
+    pub fn set_value(&mut self, v: std::vec::Vec<u8>) {
         self.value = ::protobuf::SingularField::some(v);
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_value(&mut self) -> &mut ::std::vec::Vec<u8> {
+    pub fn mut_value(&mut self) -> &mut std::vec::Vec<u8> {
         if self.value.is_none() {
             self.value.set_default();
         };
@@ -151,8 +160,8 @@ impl ProofProto {
     }
 
     // Take field
-    pub fn take_value(&mut self) -> ::std::vec::Vec<u8> {
-        self.value.take().unwrap_or_else(|| ::std::vec::Vec::new())
+    pub fn take_value(&mut self) -> std::vec::Vec<u8> {
+        self.value.take().unwrap_or_else(|| std::vec::Vec::new())
     }
 
     pub fn get_value(&self) -> &[u8] {
@@ -186,7 +195,7 @@ impl ::protobuf::Message for ProofProto {
                 },
             };
         }
-        ::std::result::Result::Ok(())
+        std::result::Result::Ok(())
     }
 
     // Compute sizes of nested messages
@@ -221,7 +230,7 @@ impl ::protobuf::Message for ProofProto {
             try!(os.write_bytes(3, &v));
         };
         try!(os.write_unknown_fields(self.get_unknown_fields()));
-        ::std::result::Result::Ok(())
+        std::result::Result::Ok(())
     }
 
     fn get_cached_size(&self) -> u32 {
@@ -236,12 +245,12 @@ impl ::protobuf::Message for ProofProto {
         &mut self.unknown_fields
     }
 
-    fn type_id(&self) -> ::std::any::TypeId {
-        ::std::any::TypeId::of::<ProofProto>()
+    fn type_id(&self) -> std::any::TypeId {
+        std::any::TypeId::of::<ProofProto>()
     }
 
-    fn as_any(&self) -> &::std::any::Any {
-        self as &::std::any::Any
+    fn as_any(&self) -> &std::any::Any {
+        self as &std::any::Any
     }
 
     fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -254,14 +263,14 @@ impl ::protobuf::MessageStatic for ProofProto {
         ProofProto::new()
     }
 
-    fn descriptor_static(_: ::std::option::Option<ProofProto>) -> &'static ::protobuf::reflect::MessageDescriptor {
+    fn descriptor_static(_: std::option::Option<ProofProto>) -> &'static ::protobuf::reflect::MessageDescriptor {
         static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
             ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
         };
         unsafe {
             descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
+                let mut fields = std::vec::Vec::new();
                 fields.push(::protobuf::reflect::accessor::make_singular_bytes_accessor(
                     "root_hash",
                     ProofProto::has_root_hash,
@@ -296,7 +305,7 @@ impl ::protobuf::Clear for ProofProto {
     }
 }
 
-impl ::std::cmp::PartialEq for ProofProto {
+impl std::cmp::PartialEq for ProofProto {
     fn eq(&self, other: &ProofProto) -> bool {
         self.root_hash == other.root_hash &&
         self.lemma == other.lemma &&
@@ -305,8 +314,8 @@ impl ::std::cmp::PartialEq for ProofProto {
     }
 }
 
-impl ::std::fmt::Debug for ProofProto {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+impl std::fmt::Debug for ProofProto {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
@@ -314,27 +323,27 @@ impl ::std::fmt::Debug for ProofProto {
 #[derive(Clone,Default)]
 pub struct LemmaProto {
     // message fields
-    node_hash: ::protobuf::SingularField<::std::vec::Vec<u8>>,
+    node_hash: ::protobuf::SingularField<std::vec::Vec<u8>>,
     sub_lemma: ::protobuf::SingularPtrField<LemmaProto>,
     // message oneof groups
-    sibling_hash: ::std::option::Option<LemmaProto_oneof_sibling_hash>,
+    sibling_hash: std::option::Option<LemmaProto_oneof_sibling_hash>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::std::cell::Cell<u32>,
+    cached_size: std::cell::Cell<u32>,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
-unsafe impl ::std::marker::Sync for LemmaProto {}
+unsafe impl std::marker::Sync for LemmaProto {}
 
 #[derive(Clone,PartialEq)]
 pub enum LemmaProto_oneof_sibling_hash {
-    left_sibling_hash(::std::vec::Vec<u8>),
-    right_sibling_hash(::std::vec::Vec<u8>),
+    left_sibling_hash(std::vec::Vec<u8>),
+    right_sibling_hash(std::vec::Vec<u8>),
 }
 
 impl LemmaProto {
     pub fn new() -> LemmaProto {
-        ::std::default::Default::default()
+        std::default::Default::default()
     }
 
     pub fn default_instance() -> &'static LemmaProto {
@@ -347,9 +356,9 @@ impl LemmaProto {
                 LemmaProto {
                     node_hash: ::protobuf::SingularField::none(),
                     sub_lemma: ::protobuf::SingularPtrField::none(),
-                    sibling_hash: ::std::option::Option::None,
+                    sibling_hash: std::option::Option::None,
                     unknown_fields: ::protobuf::UnknownFields::new(),
-                    cached_size: ::std::cell::Cell::new(0),
+                    cached_size: std::cell::Cell::new(0),
                 }
             })
         }
@@ -366,13 +375,13 @@ impl LemmaProto {
     }
 
     // Param is passed by value, moved
-    pub fn set_node_hash(&mut self, v: ::std::vec::Vec<u8>) {
+    pub fn set_node_hash(&mut self, v: std::vec::Vec<u8>) {
         self.node_hash = ::protobuf::SingularField::some(v);
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_node_hash(&mut self) -> &mut ::std::vec::Vec<u8> {
+    pub fn mut_node_hash(&mut self) -> &mut std::vec::Vec<u8> {
         if self.node_hash.is_none() {
             self.node_hash.set_default();
         };
@@ -380,8 +389,8 @@ impl LemmaProto {
     }
 
     // Take field
-    pub fn take_node_hash(&mut self) -> ::std::vec::Vec<u8> {
-        self.node_hash.take().unwrap_or_else(|| ::std::vec::Vec::new())
+    pub fn take_node_hash(&mut self) -> std::vec::Vec<u8> {
+        self.node_hash.take().unwrap_or_else(|| std::vec::Vec::new())
     }
 
     pub fn get_node_hash(&self) -> &[u8] {
@@ -427,49 +436,49 @@ impl LemmaProto {
     // optional bytes left_sibling_hash = 3;
 
     pub fn clear_left_sibling_hash(&mut self) {
-        self.sibling_hash = ::std::option::Option::None;
+        self.sibling_hash = std::option::Option::None;
     }
 
     pub fn has_left_sibling_hash(&self) -> bool {
         match self.sibling_hash {
-            ::std::option::Option::Some(LemmaProto_oneof_sibling_hash::left_sibling_hash(..)) => true,
+            std::option::Option::Some(LemmaProto_oneof_sibling_hash::left_sibling_hash(..)) => true,
             _ => false,
         }
     }
 
     // Param is passed by value, moved
-    pub fn set_left_sibling_hash(&mut self, v: ::std::vec::Vec<u8>) {
-        self.sibling_hash = ::std::option::Option::Some(LemmaProto_oneof_sibling_hash::left_sibling_hash(v))
+    pub fn set_left_sibling_hash(&mut self, v: std::vec::Vec<u8>) {
+        self.sibling_hash = std::option::Option::Some(LemmaProto_oneof_sibling_hash::left_sibling_hash(v))
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_left_sibling_hash(&mut self) -> &mut ::std::vec::Vec<u8> {
-        if let ::std::option::Option::Some(LemmaProto_oneof_sibling_hash::left_sibling_hash(_)) = self.sibling_hash {
+    pub fn mut_left_sibling_hash(&mut self) -> &mut std::vec::Vec<u8> {
+        if let std::option::Option::Some(LemmaProto_oneof_sibling_hash::left_sibling_hash(_)) = self.sibling_hash {
         } else {
-            self.sibling_hash = ::std::option::Option::Some(LemmaProto_oneof_sibling_hash::left_sibling_hash(::std::vec::Vec::new()));
+            self.sibling_hash = std::option::Option::Some(LemmaProto_oneof_sibling_hash::left_sibling_hash(std::vec::Vec::new()));
         }
         match self.sibling_hash {
-            ::std::option::Option::Some(LemmaProto_oneof_sibling_hash::left_sibling_hash(ref mut v)) => v,
+            std::option::Option::Some(LemmaProto_oneof_sibling_hash::left_sibling_hash(ref mut v)) => v,
             _ => panic!(),
         }
     }
 
     // Take field
-    pub fn take_left_sibling_hash(&mut self) -> ::std::vec::Vec<u8> {
+    pub fn take_left_sibling_hash(&mut self) -> std::vec::Vec<u8> {
         if self.has_left_sibling_hash() {
             match self.sibling_hash.take() {
-                ::std::option::Option::Some(LemmaProto_oneof_sibling_hash::left_sibling_hash(v)) => v,
+                std::option::Option::Some(LemmaProto_oneof_sibling_hash::left_sibling_hash(v)) => v,
                 _ => panic!(),
             }
         } else {
-            ::std::vec::Vec::new()
+            std::vec::Vec::new()
         }
     }
 
     pub fn get_left_sibling_hash(&self) -> &[u8] {
         match self.sibling_hash {
-            ::std::option::Option::Some(LemmaProto_oneof_sibling_hash::left_sibling_hash(ref v)) => v,
+            std::option::Option::Some(LemmaProto_oneof_sibling_hash::left_sibling_hash(ref v)) => v,
             _ => &[],
         }
     }
@@ -477,49 +486,49 @@ impl LemmaProto {
     // optional bytes right_sibling_hash = 4;
 
     pub fn clear_right_sibling_hash(&mut self) {
-        self.sibling_hash = ::std::option::Option::None;
+        self.sibling_hash = std::option::Option::None;
     }
 
     pub fn has_right_sibling_hash(&self) -> bool {
         match self.sibling_hash {
-            ::std::option::Option::Some(LemmaProto_oneof_sibling_hash::right_sibling_hash(..)) => true,
+            std::option::Option::Some(LemmaProto_oneof_sibling_hash::right_sibling_hash(..)) => true,
             _ => false,
         }
     }
 
     // Param is passed by value, moved
-    pub fn set_right_sibling_hash(&mut self, v: ::std::vec::Vec<u8>) {
-        self.sibling_hash = ::std::option::Option::Some(LemmaProto_oneof_sibling_hash::right_sibling_hash(v))
+    pub fn set_right_sibling_hash(&mut self, v: std::vec::Vec<u8>) {
+        self.sibling_hash = std::option::Option::Some(LemmaProto_oneof_sibling_hash::right_sibling_hash(v))
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_right_sibling_hash(&mut self) -> &mut ::std::vec::Vec<u8> {
-        if let ::std::option::Option::Some(LemmaProto_oneof_sibling_hash::right_sibling_hash(_)) = self.sibling_hash {
+    pub fn mut_right_sibling_hash(&mut self) -> &mut std::vec::Vec<u8> {
+        if let std::option::Option::Some(LemmaProto_oneof_sibling_hash::right_sibling_hash(_)) = self.sibling_hash {
         } else {
-            self.sibling_hash = ::std::option::Option::Some(LemmaProto_oneof_sibling_hash::right_sibling_hash(::std::vec::Vec::new()));
+            self.sibling_hash = std::option::Option::Some(LemmaProto_oneof_sibling_hash::right_sibling_hash(std::vec::Vec::new()));
         }
         match self.sibling_hash {
-            ::std::option::Option::Some(LemmaProto_oneof_sibling_hash::right_sibling_hash(ref mut v)) => v,
+            std::option::Option::Some(LemmaProto_oneof_sibling_hash::right_sibling_hash(ref mut v)) => v,
             _ => panic!(),
         }
     }
 
     // Take field
-    pub fn take_right_sibling_hash(&mut self) -> ::std::vec::Vec<u8> {
+    pub fn take_right_sibling_hash(&mut self) -> std::vec::Vec<u8> {
         if self.has_right_sibling_hash() {
             match self.sibling_hash.take() {
-                ::std::option::Option::Some(LemmaProto_oneof_sibling_hash::right_sibling_hash(v)) => v,
+                std::option::Option::Some(LemmaProto_oneof_sibling_hash::right_sibling_hash(v)) => v,
                 _ => panic!(),
             }
         } else {
-            ::std::vec::Vec::new()
+            std::vec::Vec::new()
         }
     }
 
     pub fn get_right_sibling_hash(&self) -> &[u8] {
         match self.sibling_hash {
-            ::std::option::Option::Some(LemmaProto_oneof_sibling_hash::right_sibling_hash(ref v)) => v,
+            std::option::Option::Some(LemmaProto_oneof_sibling_hash::right_sibling_hash(ref v)) => v,
             _ => &[],
         }
     }
@@ -542,22 +551,22 @@ impl ::protobuf::Message for LemmaProto {
                 },
                 3 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                        return std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    self.sibling_hash = ::std::option::Option::Some(LemmaProto_oneof_sibling_hash::left_sibling_hash(try!(is.read_bytes())));
+                    self.sibling_hash = std::option::Option::Some(LemmaProto_oneof_sibling_hash::left_sibling_hash(try!(is.read_bytes())));
                 },
                 4 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                        return std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    self.sibling_hash = ::std::option::Option::Some(LemmaProto_oneof_sibling_hash::right_sibling_hash(try!(is.read_bytes())));
+                    self.sibling_hash = std::option::Option::Some(LemmaProto_oneof_sibling_hash::right_sibling_hash(try!(is.read_bytes())));
                 },
                 _ => {
                     try!(::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields()));
                 },
             };
         }
-        ::std::result::Result::Ok(())
+        std::result::Result::Ok(())
     }
 
     // Compute sizes of nested messages
@@ -571,7 +580,7 @@ impl ::protobuf::Message for LemmaProto {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        if let ::std::option::Option::Some(ref v) = self.sibling_hash {
+        if let std::option::Option::Some(ref v) = self.sibling_hash {
             match v {
                 &LemmaProto_oneof_sibling_hash::left_sibling_hash(ref v) => {
                     my_size += ::protobuf::rt::bytes_size(3, &v);
@@ -595,7 +604,7 @@ impl ::protobuf::Message for LemmaProto {
             try!(os.write_raw_varint32(v.get_cached_size()));
             try!(v.write_to_with_cached_sizes(os));
         };
-        if let ::std::option::Option::Some(ref v) = self.sibling_hash {
+        if let std::option::Option::Some(ref v) = self.sibling_hash {
             match v {
                 &LemmaProto_oneof_sibling_hash::left_sibling_hash(ref v) => {
                     try!(os.write_bytes(3, v));
@@ -606,7 +615,7 @@ impl ::protobuf::Message for LemmaProto {
             };
         };
         try!(os.write_unknown_fields(self.get_unknown_fields()));
-        ::std::result::Result::Ok(())
+        std::result::Result::Ok(())
     }
 
     fn get_cached_size(&self) -> u32 {
@@ -621,12 +630,12 @@ impl ::protobuf::Message for LemmaProto {
         &mut self.unknown_fields
     }
 
-    fn type_id(&self) -> ::std::any::TypeId {
-        ::std::any::TypeId::of::<LemmaProto>()
+    fn type_id(&self) -> std::any::TypeId {
+        std::any::TypeId::of::<LemmaProto>()
     }
 
-    fn as_any(&self) -> &::std::any::Any {
-        self as &::std::any::Any
+    fn as_any(&self) -> &std::any::Any {
+        self as &std::any::Any
     }
 
     fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -639,14 +648,14 @@ impl ::protobuf::MessageStatic for LemmaProto {
         LemmaProto::new()
     }
 
-    fn descriptor_static(_: ::std::option::Option<LemmaProto>) -> &'static ::protobuf::reflect::MessageDescriptor {
+    fn descriptor_static(_: std::option::Option<LemmaProto>) -> &'static ::protobuf::reflect::MessageDescriptor {
         static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
             ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
         };
         unsafe {
             descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
+                let mut fields = std::vec::Vec::new();
                 fields.push(::protobuf::reflect::accessor::make_singular_bytes_accessor(
                     "node_hash",
                     LemmaProto::has_node_hash,
@@ -687,7 +696,7 @@ impl ::protobuf::Clear for LemmaProto {
     }
 }
 
-impl ::std::cmp::PartialEq for LemmaProto {
+impl std::cmp::PartialEq for LemmaProto {
     fn eq(&self, other: &LemmaProto) -> bool {
         self.node_hash == other.node_hash &&
         self.sub_lemma == other.sub_lemma &&
@@ -696,8 +705,8 @@ impl ::std::cmp::PartialEq for LemmaProto {
     }
 }
 
-impl ::std::fmt::Debug for LemmaProto {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+impl std::fmt::Debug for LemmaProto {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
